@@ -1,0 +1,48 @@
+{
+  "name": "necromaniac",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Necromaniac - A haunting 3D model viewer built for Kiroween 2024",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
+  },
+  "keywords": [
+    "kiroween",
+    "threejs",
+    "react",
+    "horror",
+    "3d-viewer",
+    "halloween",
+    "hackathon"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@react-three/drei": "^9.88.0",
+    "@react-three/fiber": "^8.15.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "framer-motion": "^10.16.0",
+    "gsap": "^3.12.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^4.1.17",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "fast-check": "^4.3.0",
+    "jsdom": "^27.2.0",
+    "vite": "^5.0.0",
+    "vitest": "^4.0.15"
+  }
+}

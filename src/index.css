@@ -1,0 +1,208 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+  /* Backgrounds */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  
+  /* Blood Theme */
+  --blood-dark: #8b0000;
+  --blood-bright: #ff0000;
+  --blood-glow: rgba(139, 0, 0, 0.8);
+  
+  /* Toxic Theme */
+  --toxic-green: #00ff00;
+  --toxic-dim: #00aa00;
+  --toxic-glow: rgba(0, 255, 0, 0.6);
+  
+  /* Ghost Theme */
+  --ghost-purple: #6600ff;
+  --ghost-blue: #0066ff;
+  
+  /* Text */
+  --text-primary: #e0e0e0;
+  --text-secondary: #888888;
+  --text-danger: #ff0000;
+  }
+
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto Mono', monospace;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--blood-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blood-bright);
+}
+
+/* Focus styles */
+*:focus {
+  outline: 2px solid var(--blood-bright);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Loading animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  border: 3px solid var(--bg-secondary);
+  border-top-color: var(--blood-bright);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+  font-family: 'Creepster', cursive;
+  color: var(--blood-bright);
+  text-shadow: 
+    2px 2px 0 var(--toxic-green),
+    -2px -2px 0 var(--ghost-blue);
+}
+
+/* Blood text effect */
+.blood-text {
+  color: var(--blood-dark);
+  filter: drop-shadow(0 0 10px var(--blood-glow));
+  font-family: 'Creepster', cursive;
+}
+
+/* Button base styles */
+.horror-button {
+  background: var(--blood-dark);
+  color: var(--text-primary);
+  border: 2px solid var(--blood-bright);
+  padding: 0.75rem 1.5rem;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.horror-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--blood-bright);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+  z-index: -1;
+}
+
+.horror-button:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.horror-button:hover {
+  box-shadow: 0 0 20px var(--blood-glow);
+  transform: scale(1.05);
+}
+
+.horror-button:active {
+  transform: scale(0.95);
+}
+
+/* Card styles */
+.horror-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--blood-dark);
+  padding: 1.5rem;
+  transition: all 0.3s ease-out;
+}
+
+.horror-card:hover {
+  border-color: var(--blood-bright);
+  box-shadow: 0 4px 20px var(--blood-glow);
+  transform: translateY(-4px);
+}
+
+/* Vignette effect */
+.vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    transparent 40%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Scanlines effect */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* Utility classes */
+.shadow-blood-glow {
+  box-shadow: 0 0 20px var(--blood-glow);
+}
