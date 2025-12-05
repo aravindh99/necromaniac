@@ -117,15 +117,17 @@ export default function App() {
       )}
 
       {/* Model Info Overlay */}
-      <ModelInfo
-        model={currentModel}
-        modelInfo={modelInfo}
-        currentIndex={currentModelIndex}
-        total={MODEL_MANIFEST.length}
-      />
+      {!showIntro && (
+        <ModelInfo
+          model={currentModel}
+          modelInfo={modelInfo}
+          currentIndex={currentModelIndex}
+          total={MODEL_MANIFEST.length}
+        />
+      )}
 
-      {/* Animation Controls */}
-      {!isLoading && availableAnimations.length > 0 && (
+      {/* Animation Controls - Only show if model has animations */}
+      {!showIntro && !isLoading && modelInfo?.hasAnimations && availableAnimations.length > 0 ? (
         <AnimationControls
           animations={availableAnimations}
           currentAnimation={currentAnimation}
@@ -134,7 +136,7 @@ export default function App() {
             setCurrentAnimation(animName);
           }}
         />
-      )}
+      ) : null}
 
       {/* Loading Indicator */}
       {isLoading && (
@@ -220,13 +222,13 @@ export default function App() {
           key={currentModel.id}
           modelUrl={currentModel.url}
           position={
-            currentModel.id === 'scene' ? [0, -2, 0] :  // Model 1: Lower position
-            [0, 0, 0]  // Other models: Normal position
+            currentModel.id === 'halloween-pumpkin' ? [2, 0, 0] :  // Pumpkin - move right
+            [0, 0, 0]  // Default center position
           }
           scale={
-            currentModel.id === 'scene' ? 0.2 :  // Model 1: Much smaller
-            currentModel.id === 'scary' ? 0.5 :   // Model 4: Smaller
-            1  // Models 2 & 3: Normal size
+            currentModel.id === 'halloween-pumpkin' ? 3 :  // Pumpkin - medium size
+            currentModel.id === 'halloween-creature' ? 2 : // Creature needs scaling
+            1  // Default scale for other models
           }
           onLoad={handleModelLoad}
           onProgress={handleModelProgress}

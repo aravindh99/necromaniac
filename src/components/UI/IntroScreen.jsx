@@ -4,6 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { audioManager } from '../../utils/audioManager';
 
 // ============================================
 // CONSTANTS
@@ -11,10 +12,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const STORY_LINES = [
   "In the depths of an abandoned laboratory...",
-  "Scientists played with forces beyond comprehension...",
   "They created... something unholy...",
   "Now, the specimens have awakened...",
-  "And they're waiting... for YOU.",
+  "And they're waiting for YOU.",
 ];
 
 // ============================================
@@ -31,37 +31,49 @@ const STORY_LINES = [
 export default function IntroScreen({ onComplete }) {
   const [currentLine, setCurrentLine] = useState(0);
   const [showWarning, setShowWarning] = useState(true);
+  const [storyStarted, setStoryStarted] = useState(false);
 
+  // Load audio files on mount
   useEffect(() => {
-    console.log('IntroScreen effect:', { showWarning, currentLine, totalLines: STORY_LINES.length });
+    const loadAudio = async () => {
+      await audioManager.load('scary-sound', '/audio/scary_sound.mp3', 'ambient');
+      await audioManager.load('scary-laugh', '/audio/scary_laugh.mp3', 'jumpscares');
+    };
+    loadAudio();
+  }, []);
+
+  // Effect for story progression - FIXED
+  useEffect(() => {
+    if (!storyStarted) return;
     
-    if (!showWarning && currentLine < STORY_LINES.length) {
-      console.log('Setting timer for next line...');
-      const timer = setTimeout(() => {
-        console.log('Timer fired, moving to next line');
+    console.log(`Story line ${currentLine} of ${STORY_LINES.length}`);
+    
+    // Wait 2 seconds then move to next line or complete
+    const timer = setTimeout(() => {
+      if (currentLine < STORY_LINES.length - 1) {
+        console.log(`Moving to line ${currentLine + 1}`);
         setCurrentLine(prev => prev + 1);
-      }, 2500);
-      return () => {
-        console.log('Cleaning up timer');
-        clearTimeout(timer);
-      };
-    } else if (!showWarning && currentLine >= STORY_LINES.length) {
-      console.log('Story complete, calling onComplete in 1.5s');
-      const timer = setTimeout(() => {
-        console.log('Calling onComplete');
+      } else {
+        console.log('Story complete!');
+        audioManager.stop('scary-sound');
         onComplete();
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [currentLine, showWarning, onComplete]);
+      }
+    }, 2000);
+    
+    return () => clearTimeout(timer);
+  }, [currentLine, storyStarted]); // Removed onComplete from dependencies
 
   const handleEnter = () => {
-    console.log('User clicked ENTER button');
+    console.log('User clicked ENTER - starting story');
+    audioManager.enable();
+    audioManager.play('scary-sound', true);
     setShowWarning(false);
+    setStoryStarted(true);
   };
 
   const handleSkip = () => {
-    console.log('User clicked SKIP button');
+    console.log('User clicked SKIP');
+    audioManager.stop('scary-sound');
     onComplete();
   };
 
@@ -84,10 +96,10 @@ export default function IntroScreen({ onComplete }) {
           <div className="text-xl text-text-primary font-body mb-8 space-y-4">
             <p>This experience contains:</p>
             <ul className="list-none space-y-2">
-              <li>🩸 Disturbing imagery</li>
-              <li>⚡ Flashing lights</li>
-              <li>👻 Jump scares</li>
-              <li>🔊 Sudden sounds</li>
+              <li>🩸 Horror 3D Models</li>
+              <li>👻 Jump Scares</li>
+              <li>🔊 Scary Sounds</li>
+              <li>🎃 Spooky Atmosphere</li>
             </ul>
             <p className="text-text-danger mt-6">
               Viewer discretion is advised.
@@ -101,35 +113,37 @@ export default function IntroScreen({ onComplete }) {
           </button>
         </motion.div>
       ) : (
-        <div className="relative">
+        <div className="relative w-full h-full flex items-center justify-center">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={currentLine}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-center p-8"
-            >
-              {currentLine < STORY_LINES.length ? (
-                <p className="text-3xl font-heading text-blood-bright">
+            {currentLine >= 0 && currentLine < STORY_LINES.length && (
+              <motion.div
+                key={currentLine}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-center p-8"
+              >
+                <p className="text-3xl font-heading text-blood-bright drop-shadow-[0_0_10px_rgba(139,0,0,0.8)]">
                   {STORY_LINES[currentLine]}
                 </p>
-              ) : (
-                <p className="text-3xl font-heading text-blood-bright">
-                  Loading...
-                </p>
-              )}
-            </motion.div>
+              </motion.div>
+            )}
           </AnimatePresence>
           
-          {/* Skip button */}
-          <button
+          {/* Skip button - scary styled */}
+          <motion.button
             onClick={handleSkip}
-            className="absolute bottom-4 right-4 text-text-secondary hover:text-blood-bright transition-colors text-sm font-body"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+            className="absolute bottom-16 right-8 px-6 py-3 bg-bg-secondary border-2 border-blood-dark text-blood-bright font-heading text-lg hover:bg-blood-dark hover:text-text-primary hover:scale-110 transition-all duration-300 shadow-[0_0_20px_rgba(139,0,0,0.5)] hover:shadow-[0_0_30px_rgba(139,0,0,0.8)]"
+            style={{
+              clipPath: 'polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%)'
+            }}
           >
-            Skip Intro →
-          </button>
+            SKIP →
+          </motion.button>
         </div>
       )}
     </motion.div>

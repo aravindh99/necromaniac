@@ -97,9 +97,25 @@ export default function GlitchEffect() {
                 transform: 'translate(2px, -2px)',
               }}
             />
+            {/* Flashing Light Effect */}
+            <div
+              className="absolute inset-0 bg-white"
+              style={{
+                opacity: 0.3,
+                animation: 'flash 0.1s ease-in-out 2',
+              }}
+            />
           </>
         )}
       </div>
+      
+      {/* Flash Animation */}
+      <style>{`
+        @keyframes flash {
+          0%, 100% { opacity: 0; }
+          50% { opacity: 0.3; }
+        }
+      `}</style>
     </>
   );
 }

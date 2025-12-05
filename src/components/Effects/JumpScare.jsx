@@ -4,6 +4,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { audioManager } from '../../utils/audioManager';
 
 // ============================================
 // CONSTANTS
@@ -40,6 +41,9 @@ export default function JumpScare() {
         ];
         setScareImage(randomImage);
         setIsActive(true);
+        
+        // Play scary laugh sound
+        audioManager.play('scary-laugh');
 
         // Hide after 0.5 seconds
         setTimeout(() => {

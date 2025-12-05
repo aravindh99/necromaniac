@@ -14,19 +14,19 @@
 
 export const MODEL_MANIFEST = [
   {
-    id: 'scene',
-    name: 'Horror Scene',
-    url: '/models/scene/scene.gltf',
+    id: 'halloween-creature',
+    name: 'Halloween Creature',
+    url: '/models/halloween_creature.glb',
     thumbnail: null,
-    description: 'Complete horror scene with textures',
+    description: 'Spooky Halloween creature',
     animations: [], // Will be detected on load
     polyCount: 0, // Unknown
     attribution: {
-      author: 'Custom Scene',
+      author: 'Halloween Collection',
       license: 'Custom',
       source: 'Local'
     },
-    tags: ['scene', 'environment', 'horror']
+    tags: ['halloween', 'creature', 'horror']
   },
   {
     id: 'scary-monster',
@@ -59,19 +59,19 @@ export const MODEL_MANIFEST = [
     tags: ['humanoid', 'scary', 'horror']
   },
   {
-    id: 'scary',
-    name: 'Scary',
-    url: '/models/scary.glb',
+    id: 'halloween-pumpkin',
+    name: 'Halloween Pumpkin',
+    url: '/models/halloween_pumpkin.glb',
     thumbnail: null,
-    description: 'Horror creature',
+    description: 'Creepy Halloween pumpkin',
     animations: [], // Will be detected on load
     polyCount: 0, // Unknown
     attribution: {
-      author: 'Downloaded from Sketchfab',
-      license: 'Check model source',
-      source: 'Sketchfab'
+      author: 'Halloween Collection',
+      license: 'Custom',
+      source: 'Local'
     },
-    tags: ['creature', 'scary', 'horror']
+    tags: ['halloween', 'pumpkin', 'horror']
   }
 ];
 

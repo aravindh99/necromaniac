@@ -9,10 +9,10 @@ import { motion } from 'framer-motion';
 // ============================================
 
 const MODEL_STORIES = {
-  'scene': {
-    title: 'The Laboratory',
-    story: 'This is where it all began... The experiments that should never have been conducted. The screams still echo in these walls.',
-    warning: '⚠️ Do not approach the specimens'
+  'halloween-creature': {
+    title: 'The Halloween Beast',
+    story: 'Born from the darkest night of the year, this creature feeds on fear itself. Every Halloween, it awakens to hunt.',
+    warning: '🎃 Active on Halloween night'
   },
   'scary-monster': {
     title: 'Subject Alpha',
@@ -24,10 +24,10 @@ const MODEL_STORIES = {
     story: 'Once human, now something else. The virus took only 3 hours to complete the transformation.',
     warning: '☣️ Highly contagious'
   },
-  'scary': {
-    title: 'Patient Zero',
-    story: 'The source of the outbreak. Found in the depths of an ancient tomb. It should have stayed buried.',
-    warning: '💀 Origin of the plague'
+  'halloween-pumpkin': {
+    title: 'The Cursed Pumpkin',
+    story: 'Carved by a witch centuries ago, this pumpkin contains trapped souls. Its grin grows wider with each victim.',
+    warning: '👻 Contains restless spirits'
   }
 };
 
